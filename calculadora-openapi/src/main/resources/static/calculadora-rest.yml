@@ -1,0 +1,188 @@
+openapi: 3.0.1
+info:
+  title: Calculadora API
+  description: API to be consumed as part of a challenge
+  version: 1.0.0
+tags:
+  - name: Calculadora
+paths:
+  '/operaciones/suma/{num1}/{num2}':
+    parameters:
+      - in: path
+        name: num1
+        schema:
+          type: integer
+        description: Operando 1
+      - in: path
+        name: num2
+        schema:
+          type: integer
+        description: Operando 2
+    get:
+      tags:
+        - suma
+      summary: Suma
+      description: The response returns the suma
+      operationId: suma
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/operaciones/resta/{num1}/{num2}':
+    parameters:
+      - in: path
+        name: num1
+        schema:
+          type: integer
+        description: Operando 1
+      - in: path
+        name: num2
+        schema:
+          type: integer
+        description: Operando 2
+    get:
+      tags:
+        - resta
+      summary: Resta
+      description: The response returns the resta
+      operationId: resta
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        uuid:
+          type: string
+          description: UUID of this error
+          format: uuid
+          example: 4c3a5767-4973-44b0-a9c2-b8cf1b34373a
+          readOnly: true
+        method:
+          type: string
+          example: GET
+          description: HTTP method with which this request was made
+          readOnly: true
+        path:
+          type: string
+          format: uri-reference
+          example: /suma
+          description: Path of this request
+          readOnly: true
+        status:
+          type: integer
+          example: 500
+          format: int32
+          description: Https status code
+          readOnly: true
+        description:
+          type: string
+          example: 'An error occurred when updating a suma. Please try again later, and if the problem persists, contact the supercustomer services department'
+          description: Message with the error explained
+      required:
+        - uuid
+        - status
+        - description
+  parameters: {}
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+  responses:
+    '400':
+      description: 'Bad Request, Suma ID invalid or JSON body error.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            example-1:
+              value:
+                uuid: 4c3a5767-4973-44b0-a9c2-b8cf1b34373a
+                method: POST
+                path: /suma
+                status: 400
+                description: 'universe: cannot be null'
+    '401':
+      description: Authorization information is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            example-1:
+              value:
+                uuid: 4c3a5767-4973-44b0-a9c2-b8cf1b34373a
+                method: GET
+                path: /suma
+                status: 401
+                description: Unauthorized
+    '403':
+      description: User permissions is not enough.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            example-1:
+              value:
+                uuid: 4c3a5767-4973-44b0-a9c2-b8cf1b34373a
+                method: GET
+                path: /suma
+                status: 403
+                description: Forbidden
+    '404':
+      description: A Suma with the specified ID was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            example-1:
+              value:
+                uuid: 4c3a5767-4973-44b0-a9c2-b8cf1b34373a
+                method: GET
+                path: /suma/8888
+                status: 404
+                description: Id not found
+    '500':
+      description: Unexpected error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+security:
+  - basicAuth: []
+servers:
+  - url: 'http://localhost:8083'
+    description: Local
