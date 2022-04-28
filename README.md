@@ -56,5 +56,13 @@ Pruebas desde Swagger
 
 http://localhost:8080/swagger-ui/index.html
 
- 
+Pruebas desde consola cmd
+
+```
+curl http://localhost:8080/operaciones/suma/{num1}/{num2}
+```
+```
+curl http://localhost:8080/operaciones/resta/{num1}/{num2}
+```
+Siendo num1 y num2 , dos números enteros. 
 
