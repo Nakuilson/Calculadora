@@ -21,6 +21,12 @@ Para ejecutar y desarrollar sobre este servicio debe contar con los siguientes r
 
 Run `mvn clean verify` para el chequeo.
 
+Para instalar la libreria tracer en el repositorio de maven local
+
+```
+mvn install:install-file -Dfile=C:{rutafichero}\tracer-1.0.0.jar -DgroupId=io.corp -DartifactId=tracer -Dversion=1.0.0 -Dpackaging=jar
+````
+
 ### Ejecución
 
 Para arrancar en local
